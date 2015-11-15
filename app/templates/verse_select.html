@@ -1,0 +1,53 @@
+<html>
+<head>
+{% block js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="/static/dropdown.js"></script>
+<!--<script type='text/javascript'>graph()</script>-->
+
+{% endblock %}
+</head>
+{% block main %}
+    {% block dropdown %}
+    <form method="POST" action=".">
+        <div style="display: none;">
+            {{form.book}}
+            {{form.chapter}}
+            {{form.verse}}
+            <input id="submit-form" type="submit" value="submit">
+        </div>
+    </form>
+        <select id="book-dd">
+            {% for book in books %}
+                {% if book == cur_book %}
+                    <option value="{{book}}" selected>{{book}}</option>
+                {% else %}
+                    <option value="{{book}}">{{book}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <select id="chapter-dd">
+            {% for chapter in chapters %}
+                {% if chapter == cur_chapter %}
+                    <option value="{{chapter}}" selected>{{chapter}}</option>
+                {% else %}
+                    <option value="{{chapter}}">{{chapter}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <select id="verse-dd">
+            {% for verse in verses %}
+                {% if verse == cur_verse %}
+                    <option value="{{verse}}" selected>{{verse}}</option>
+                {% else %}
+                    <option value="{{verse}}">{{verse}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input id="submit" type="button" value="Go!">
+    </form>
+    {% endblock %}
+{% endblock %}

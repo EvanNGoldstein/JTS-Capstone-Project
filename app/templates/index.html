@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+{% extends "verse_select.html" %}
+<html lang="en">
+{% block js %}
+    {{super()}}
+{% endblock %}
+<head>
+<meta charset="utf-8">
+<title>Capstone Project</title>
+
+<style type="text/css">
+</style>
+</head>
+<body>
+    {% block main %}
+        {% block dropdown %}
+          {{super()}}
+        {% endblock %}
+    {% endblock %}
+</body>
+</html>
