@@ -8,6 +8,12 @@
 <script src="/static/dropdown.js"></script>
 <!--<script type='text/javascript'>graph()</script>-->
 
+<style type="text/css">
+
+    .hidden{
+        display: none;
+    }
+</style>
 {% endblock %}
 </head>
 {% block main %}
@@ -17,6 +23,7 @@
             {{form.book}}
             {{form.chapter}}
             {{form.verse}}
+            {{form.depth}}
             <input id="submit-form" type="submit" value="submit">
         </div>
     </form>
@@ -47,7 +54,9 @@
                 {% endif %}
             {% endfor %}
         </select>
+        Depth: <input id="depth-input" value="1" type="number"></input>
         <input id="submit" type="button" value="Go!">
     </form>
     {% endblock %}
+    <div id="loading" class="hidden">Calculating optimal layout</div>
 {% endblock %}

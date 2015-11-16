@@ -57,8 +57,10 @@ def index():
         book = form.book.data
         chapter = form.chapter.data
         verse = form.verse.data
+        depth = form.depth.data
 
-        return redirect(url_for('.graph', book=book, chapter=chapter, verse=verse))
+        print url_for('.graph', book=book, chapter=chapter, verse=verse, depth=depth)
+        return redirect(url_for('.graph', book=book, chapter=chapter, verse=verse, depth=depth))
     #50 chapters in Gen, 31 vereses in Chp 1. range function is non-inclusive, so end of range is set to 51 and 32 respectively
     return render_template('index.html',
                             books=books,
@@ -67,39 +69,50 @@ def index():
                             cur_book='Genesis',
                             form=form)
 
-@app.route('/<book>/<chapter>/<verse>', methods=["GET", "POST"])
-def graph(book, chapter, verse):
+@app.route('/<book>.<chapter>.<verse>?depth=<depth>', methods=["GET", "POST"])
+def graph(book, chapter, verse, depth):
     #TODO: Validate book, chapter, and verse
     form = CreateInputForm(csrf_enabled=False)
     seed_verse = str(book) + " " + str(chapter) + ":" + str(verse)
+    depth = int(depth)
 
-    print form.validate_on_submit();
+    print depth
+
+    #print form.validate_on_submit();
     if form.validate_on_submit():
         new_book = form.book.data
         new_chapter = form.chapter.data
         new_verse = form.verse.data
-        #return redirect(url_for('.graph', book=new_book, chapter=new_chapter, verse=new_verse))
+        depth = form.depth.data
+        #return redirect(url_for('.graph', book=new_book, chapter=new_chapter, verse=new_verse, depth=depth))
 
-
-    link_dict = grab_data(book, chapter, verse)
 
     nodes_dict = defaultdict(str)
     nodes_dict[seed_verse] = str(0)
 
+    #depth = 2;
+
     nodes = [seed_verse]
+    new_verses = [seed_verse]
     edges = []
     edge_labels = []
     link_num = 0
-    for link in link_dict:
-        if not nodes_dict[str(link)]:
-            link_num = link_num + 1
-            nodes_dict[str(link)] = str(link_num)
-            nodes.append(str(link))
-        for source in link_dict[link]:
-            edges.append(nodes_dict[seed_verse] + "-" + nodes_dict[link])
-            edge_labels.append(str(source))
+    for i in range(depth):
+        new_new_verses = []
+        for new_verse in new_verses:
+            link_dict = grab_data(new_verse)
 
-    print edge_labels
+            for link in link_dict:
+                if not nodes_dict[str(link)]:
+                    link_num = link_num + 1
+                    nodes_dict[str(link)] = str(link_num)
+                    nodes.append(str(link))
+                    new_new_verses.append(str(link))
+                for source in link_dict[link]:
+                    edges.append(nodes_dict[new_verse] + "-" + nodes_dict[link])
+                    edge_labels.append(str(source))
+        new_verses = new_new_verses
+
     return render_template('graph.html', #TODO: Change to graph.html
                             books=books,
                             chapters=range(1, len(books_dict[book]) + 1),

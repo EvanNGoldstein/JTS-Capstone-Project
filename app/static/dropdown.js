@@ -94,7 +94,9 @@ $(document).on('click', "#submit", function(e){
     $('#book').val(book);
     $('#chapter').val(document.getElementById('chapter-dd').value)
     $('#verse').val(document.getElementById('verse-dd').value)
+    $('#depth').val(document.getElementById('depth-input').value)
 
+    $('#loading').removeClass('hidden');
     $('#submit-form').click()
 
 })

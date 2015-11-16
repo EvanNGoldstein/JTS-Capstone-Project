@@ -6,16 +6,17 @@ from collections import defaultdict
 
 start = time.clock()
 
-def grab_data(book, chapter, verse):
+def grab_data(seed_verse):
 #Connect to database and initialize links_table
     client = MongoClient('localhost', 27017)
     db = client.sefaria
     links_table = db.links
 
     #regex for filtering out Biblical verses from other text types
-    regex = "^([I] )?[a-zA-Z]* [0-9]+:[0-9]+$|^Song of Songs [0-9]+:[0-9]+$"
 
-    seed_verse =  str(book) + " " + str(chapter) + ":" + str(verse) #"Exodus 20:2"
+    regex = "^((I){1,2} )?[a-zA-Z]* [0-9]+:[0-9]+$|^Song of Songs [0-9]+:[0-9]+$"
+
+    #seed_verse =  str(book) + " " + str(chapter) + ":" + str(verse) #"Exodus 20:2"
 
     links = []
     verses = []
