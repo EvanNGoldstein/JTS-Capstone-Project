@@ -13,7 +13,7 @@ def grab_data(book, chapter, verse):
     links_table = db.links
 
     #regex for filtering out Biblical verses from other text types
-    regex = "^([1-2] )?[a-zA-Z]* [0-9]+:[0-9]$|Song of Songs [0-9]+:[0-9]$"
+    regex = "^([I] )?[a-zA-Z]* [0-9]+:[0-9]+$|^Song of Songs [0-9]+:[0-9]+$"
 
     seed_verse =  str(book) + " " + str(chapter) + ":" + str(verse) #"Exodus 20:2"
 

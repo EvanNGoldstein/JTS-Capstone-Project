@@ -12,6 +12,11 @@
       stroke: #666;
       stroke-width: .5px;
     }
+
+    circle{
+        z-index: 100;
+        position: relative;
+    }
 </style>
     {% endblock %}
 <meta charset="utf-8">
@@ -126,7 +131,18 @@ console.log(1/nodes_list.length);
     //   .style("stroke","#ccc")
     //   .style("pointer-events", "none");
 
-    var nodes = svg.selectAll("circle")
+
+
+
+var path = svg.append("svg:g").selectAll("path")
+    .data(force.links())
+  .enter().append("svg:path")
+    .attr("class", function(d) { return "link " + d.type; })
+    .attr("marker-end", function(d) { return "url(#" + d.type + ")"; })
+    .style("z-index", -1000)
+    .style("position", "relative");
+
+var nodes = svg.selectAll("circle")
       .data(dataset.nodes)
       .enter()
       .append("circle")
@@ -134,15 +150,9 @@ console.log(1/nodes_list.length);
       .attr("fixed", true)// function(d){if(d.name=="Proverbs 1:2"){console.log("hello, world!"); return true;} else return false;})
       .style("fill",function(d,i){return colors(i);})
       .style("display", "none")
+      .style("z-index", 100)
+      .style("position", "relative")
       .call(force.drag)
-
-
-var path = svg.append("svg:g").selectAll("path")
-    .data(force.links())
-  .enter().append("svg:path")
-    .attr("class", function(d) { return "link " + d.type; })
-    .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
-
     // var nodelabels = svg.selectAll(".nodelabel")
     //    .data(dataset.nodes)
     //    .enter()
