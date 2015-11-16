@@ -52,3 +52,18 @@ def grab_data(seed_verse):
     end = time.clock()
     return verse_connections_dict
     #print end - start
+
+def grab_works():
+    client = MongoClient('localhost', 27017)
+    db = client.sefaria
+    index_table = db.index
+
+    works = [];
+    results = index_table.find({"categories": {"$in": ["Commentary", "Midrash", "Mishnah"]}})
+
+    for result in results:
+        works.append(result["title"])
+
+    works.sort()
+
+    return works

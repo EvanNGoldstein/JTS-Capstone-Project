@@ -55,8 +55,8 @@
         nodes_list.push({name: nodes_data[i], x: 600+(i*2), y: 500, fixed: fixed})
     }
 
-    var w = 100*nodes_list.length;
-    var h = 100*nodes_list.length;
+    var w = 2000//100*nodes_list.length;
+    var h = 2000//100*nodes_list.length;
 
     nodes_list[0].x = w/2;
     nodes_list[0].y = h/2;//.attr('y', 50000)
@@ -106,7 +106,7 @@ for (var i=0; i<links.length; i++) {
 
 
 
-    var svg = d3.select("body").append("svg").attr({"width":w,"height":h});
+    var svg = d3.select("body").append("svg").attr({"width":w,"height":h});//.style("float", "right");
     var force = d3.layout.force()
         .nodes(dataset.nodes)
         .links(dataset.edges)

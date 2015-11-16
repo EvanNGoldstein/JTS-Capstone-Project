@@ -96,9 +96,36 @@ $(document).on('click', "#submit", function(e){
     $('#verse').val(document.getElementById('verse-dd').value)
     $('#depth').val(document.getElementById('depth-input').value)
 
+    var selected = document.getElementsByName('works')
+    var works = []
+    for(i = 0; i < selected.length; i++){
+        if(selected[i].checked){
+            console.log("hello");
+            works.push(selected[i].value);
+            console.log(selected[i].value)
+        }
+    }
+
+    console.log(works.join('%'))
+    $('#works').val(works.join('%'));
     $('#loading').removeClass('hidden');
+
     $('#submit-form').click()
 
+})
+
+$(document).on('click', '#show', function(e){
+    e.preventDefault();
+    $('#show').addClass('hidden');
+    $('#hide').removeClass('hidden');
+    $('#select-works').removeClass('hidden');
+})
+
+$(document).on('click', '#hide', function(e){
+    e.preventDefault();
+    $('#hide').addClass('hidden');
+    $('#show').removeClass('hidden');
+    $('#select-works').addClass('hidden');
 })
 
 });

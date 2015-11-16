@@ -24,6 +24,7 @@
             {{form.chapter}}
             {{form.verse}}
             {{form.depth}}
+            {{form.works}}
             <input id="submit-form" type="submit" value="submit">
         </div>
     </form>
@@ -56,6 +57,17 @@
         </select>
         Depth: <input id="depth-input" value="1" type="number"></input>
         <input id="submit" type="button" value="Go!">
+        <a id="show" href=".">Show Filters</a><a id="hide" class=" hidden" href=".">Hide Filters</a>
+        <div id="select-works" class="hidden">
+            {% for work in works %}
+                    {% if work in selected_works %}
+                        <input type="checkbox" name="works" value="{{work}}" checked>{{work}}</input><br>
+                    {% else %}
+                        <input type="checkbox" name="works" value="{{work}}">{{work}}</input><br>
+                    {% endif %}
+
+            {% endfor %}
+        </div>
     </form>
     {% endblock %}
     <div id="loading" class="hidden">Calculating optimal layout</div>

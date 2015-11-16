@@ -7,3 +7,4 @@ class CreateInputForm(Form):
     chapter = IntegerField("Chapter")
     verse = IntegerField("Verse")
     depth = IntegerField("Depth")
+    works = StringField("Works")
