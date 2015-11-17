@@ -53,7 +53,7 @@ books_dict ={'Genesis': [31, 25, 24, 26, 32, 22, 24, 22, 29, 32, 32, 20, 18, 24,
     'II Chronicles': [18, 17, 17, 22, 14, 42, 22, 18, 31, 19, 23, 16, 23, 14, 19, 14, 19, 34, 11, 37, 20, 12, 21, 27, 28, 23, 9, 27, 36, 27, 21, 33, 25, 33, 27, 23]}
 
 works = [u'Abravanel', u'Al HaTorah', u'And you shall count', u"Ba'al HaTurim on the Torah", u'Baal HaTurim', u'Bartenura', u'Bedek HaBayit', u'Bekhor Shor', u'Bemidbar Rabbah', u'Bereishit Rabbah', u'Buber footnotes', u'Chidushei HaRashba', u'Chizkuni', u"Da'at Mikreh", u'Daat Zkenim', u'Derushim', u'Derushim Al HaTorah', u'Devarim Rabbah', u'Dibros Moshe', u'Divrei Negidim', u'Eichah Rabbah', u'Ein Yaakov', u'Ein Yaakov (Glick Edition)', u'Ephod Bad', u'Esther Rabbah', u'Ethics', u'Eyn Ayah', u'Footnotes', u"HaK'tav V'haKabbalah", u'Haamek Davar', u'Hirsch', u'Ibn Ezra', u'Ikar Siftei Hachamim', u'Ikar Tosafot Yom Tov', u'Jacob Neusner', u'Kessef Mishneh on Mishneh Torah',
- u'Kimcha Davshuna', u'Kitzur Baal Haturim', u'Kli Yakar', u'Kohelet Rabbah', u'Kos Shel Eliyahu', u'Koveitz Meforshim on Meseches Archin', u'Legends of the Jews', u'Maarechet Heidenheim', u'Maaseh Nissim', u'Maggid Mishnah', u'Malbim', u'Malbim Beur Hamilot', u'Marbeh Lisaper', u'Meforash', u'Meir Ayin', u'Mekhilta', u'Mekhilta DeRabbi Shimon Bar Yochai', u'Meor Shemesh: Parshas Pinchos', u'Meseches Archin', u'Metzudat David', u'Metzudat Zion', u"Midrash B'not Zelophehad", u'Midrash Mishlei', u'Midrash Tanchuma', u'Mishmeret HaBayit', u'Mishnah'
+ u'Kimcha Davshuna', u'Kitzur Baal Haturim', u'Kli Yakar', u'Kohelet Rabbah', u'Kos Shel Eliyahu', u'Koveitz Meforshim on Meseches Archin', u'Legends of the Jews', u'Maarechet Heidenheim', u'Maaseh Nissim', u'Maggid Mishnah', u'Malbim', u'Malbim Beur Hamilot', u'Marbeh Lisaper', u'Meforash', u'Meir Ayin', u'Mekhilta', u'Mekhilta DeRabbi Shimon Bar Yochai', u'Meor Shemesh: Parshas Pinchos', u'Meseches Archin', u'Metzudat David', u'Metzudat Zion', u"Midrash B'not Zelophehad", u'Midrash Mishlei', u'Midrash Tanchuma', u'Mishmeret HaBayit', u'Mishnah',
   u'Naftali Seva Ratzon', u'Nehama Leibowitz on Noach', u'Ohalei Chaim', u'Or HaChaim', u'Peirush HaHaflaah', u'Penei Dovid', u'Pirkei Avot', u'Pirkei DeRabbi Eliezer', u"Ra'avad", u'Raavad on Mishneh Torah', u'Rabbeinu Bachya', u'Rabbeinu Chananel', u'Rabbeinu Gershom', u'Rabbi Nosson Scherman', u'Rabbi S R Hirsch', u'Radak', u'Ralbag', u'Rambam',
     u'Ramban', u'Ran', u'Rashba on rosh hashanah', u'Rashbam', u'Rashi', u'Rav Hirsche', u'Reading the Women of the Bible', u'Recanati', u'Recanati Al HaTorah', u'Recanati on the HaTorah', u'Ritva', u'Rut Rabba', u'Saadia Gaon', u'Sefer Abudraham', u'Sepher Torat Elohim', u'Sforno', u'Shadal', u'Shemot Rabbah', u'Shibbolei HaLeket', u'Shir HaShirim Rabbah', u'Shita Mekubetzet', u'Shiurei Tosafot', u'Sifra', u'Sifre Bamidbar', u'Siftei Chakhamim', u'Tafsir of Saadia Gaon', u'Tanna Debei Eliyahu Rabbah', u'Tanna debei Eliyahu Zuta', u'The Fathers According to Rabbi Nathan', u'Toldot Aharon', u"Toldot HaAdam Sha'ar HaGadol", u'Torah Temimah', u'Tosafot',
   u'Tosafot Yom Tov',
@@ -83,7 +83,8 @@ def index():
                             cur_book='Genesis',
                             form=form,
                             works=works,
-                            selected_works=[])
+                            selected_works=[],
+                            depth=1)
 
 @app.route('/<book>.<chapter>.<verse>?depth=<depth>', methods=["GET", "POST"])
 def graph(book, chapter, verse, depth):
@@ -151,7 +152,7 @@ def graph(book, chapter, verse, depth):
     return render_template('graph.html', #TODO: Change to graph.html
                             books=books,
                             chapters=range(1, len(books_dict[book]) + 1),
-                            verses=range(1, books_dict[book][int(chapter)] + 1),
+                            verses=range(1, books_dict[book][int(chapter)-1] + 1),
                             form=form,
                             cur_book=str(book),
                             cur_chapter=int(chapter),
@@ -161,7 +162,8 @@ def graph(book, chapter, verse, depth):
                             edge_labels="/".join(edge_labels),
                             seed_verse=seed_verse,
                             works=works,
-                            selected_works=selected_works)
+                            selected_works=selected_works,
+                            depth=depth)
 
 
 

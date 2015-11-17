@@ -60,7 +60,7 @@ $('#book-dd').change(function(){
 
     versedd.options.length = 0;
     chapter = chapterdd.value;
-    for(i = 0; i < books[book][chapter]; i++){
+    for(i = 0; i < books[book][chapter-1]; i++){
         var opt = document.createElement("option");
         opt.value = i+1;
         opt.text = i+1;
@@ -77,7 +77,7 @@ $('#chapter-dd').change(function(){
     versedd = document.getElementById('verse-dd');
 
     versedd.options.length = 0;
-    for(i = 0; i < books[book][chapter]; i++){
+    for(i = 0; i < books[book][chapter-1]; i++){
         var opt = document.createElement("option");
         opt.value = i+1;
         opt.text = i+1;
